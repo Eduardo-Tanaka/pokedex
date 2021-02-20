@@ -9,7 +9,7 @@ import retrofit2.http.Path
 interface PokedexService {
 
     @GET("/generation/{generation}")
-    suspend fun getCotacao(
+    suspend fun getPokemonByGeneration(
         @Path("generation") generation: Int,
     ): Response<PokemonGenerationResponse>
 }
