@@ -89,4 +89,8 @@ dependencies {
 
     // logging
     implementation "com.jakewharton.timber:timber:$timberVersion"
+
+    //Threeten ABP (DateTime support)
+    implementation "com.jakewharton.threetenabp:threetenabp:$jwThreetenABP"
+    testImplementation "org.threeten:threetenbp:$orgThreetenbp"
 }

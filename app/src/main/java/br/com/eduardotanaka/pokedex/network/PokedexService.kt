@@ -8,7 +8,7 @@ import retrofit2.http.Path
 // GET https://pokeapi.co/api/v2/generation/{id or name}/
 interface PokedexService {
 
-    @GET("/generation/{generation}")
+    @GET("/api/v2/generation/{generation}")
     suspend fun getPokemonByGeneration(
         @Path("generation") generation: Int,
     ): Response<PokemonGenerationResponse>

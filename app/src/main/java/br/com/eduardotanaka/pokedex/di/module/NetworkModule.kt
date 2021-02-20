@@ -1,4 +1,4 @@
-package br.com.eduardotanaka.pokedex.di
+package br.com.eduardotanaka.pokedex.di.module
 
 import br.com.eduardotanaka.pokedex.BuildConfig
 import br.com.eduardotanaka.pokedex.network.HttpRequestInterceptor

@@ -1,4 +1,4 @@
-package br.com.eduardotanaka.pokedex.di
+package br.com.eduardotanaka.pokedex.di.module
 
 import br.com.eduardotanaka.pokedex.data.repository.PokedexRepository
 import br.com.eduardotanaka.pokedex.data.repository.PokedexRepositoryImpl
