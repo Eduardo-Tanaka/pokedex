@@ -1,12 +1,14 @@
 package br.com.eduardotanaka.pokedex.data.model.entity.base
 
+import android.os.Parcelable
 import br.com.eduardotanaka.pokedex.data.model.api.PokemonGenerationResponse
 import br.com.eduardotanaka.pokedex.data.model.entity.PokemonGeneration
-import java.io.Serializable
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class PokemonSpecies(
     var pokemonGeneration: List<PokemonGeneration> = ArrayList()
-) : ReflectsApiResponse<PokemonSpecies, PokemonGenerationResponse>, Serializable {
+) : ReflectsApiResponse<PokemonSpecies, PokemonGenerationResponse>, Parcelable {
     override fun reflectFrom(apiResponse: PokemonGenerationResponse): PokemonSpecies {
         apiResponse.pokemonSpecies.let { result ->
             pokemonGeneration = result.map {

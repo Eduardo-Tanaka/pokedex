@@ -3,13 +3,16 @@ package br.com.eduardotanaka.pokedex.data.room
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import br.com.eduardotanaka.pokedex.data.model.entity.Pokemon
 import br.com.eduardotanaka.pokedex.data.model.entity.PokemonGeneration
 import br.com.eduardotanaka.pokedex.data.room.converter.Converters
+import br.com.eduardotanaka.pokedex.data.room.dao.PokemonDao
 import br.com.eduardotanaka.pokedex.data.room.dao.base.PokemonGenerationDao
 
 @Database(
-    version = 2,
+    version = 3,
     entities = [
+        Pokemon::class,
         PokemonGeneration::class,
     ],
     exportSchema = false
@@ -18,5 +21,5 @@ import br.com.eduardotanaka.pokedex.data.room.dao.base.PokemonGenerationDao
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun pokemonGenerationDao(): PokemonGenerationDao
-
+    abstract fun pokemonDao(): PokemonDao
 }

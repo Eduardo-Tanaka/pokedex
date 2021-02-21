@@ -13,7 +13,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Pokedex">
-        <activity android:name=".ui.MainActivity">
+        <activity
+            android:name=".ui.pokemonlist.PokemonListActivity"
+            android:label="1º Generation"
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

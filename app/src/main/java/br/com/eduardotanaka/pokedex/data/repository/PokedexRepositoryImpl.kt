@@ -3,6 +3,8 @@ package br.com.eduardotanaka.pokedex.data.repository
 import android.content.SharedPreferences
 import br.com.eduardotanaka.pokedex.constants.CacheKey
 import br.com.eduardotanaka.pokedex.data.model.api.PokemonGenerationResponse
+import br.com.eduardotanaka.pokedex.data.model.api.PokemonResponse
+import br.com.eduardotanaka.pokedex.data.model.entity.Pokemon
 import br.com.eduardotanaka.pokedex.data.model.entity.base.PokemonSpecies
 import br.com.eduardotanaka.pokedex.data.repository.base.BaseRepository
 import br.com.eduardotanaka.pokedex.data.repository.base.Resource
@@ -23,7 +25,7 @@ class PokedexRepositoryImpl @Inject constructor(
         val dataFetchHelper = object : DataFetchHelper.LocalFirstUntilStale<PokemonSpecies>(
             "PokedexRepositoryImpl",
             sharedPreferences,
-            CacheKey.POKEDEX_GENERATION.toString(),
+            CacheKey.POKEDEX_GENERATION.toString() + "_" + generation,
             "Dados das gerações de pokemon",
             TimeUnit.HOURS.toSeconds(24 * 30)
         ) {
@@ -32,7 +34,7 @@ class PokedexRepositoryImpl @Inject constructor(
             }
 
             override suspend fun getDataFromNetwork(): Response<out Any?> {
-                return pokedexService.getPokemonByGeneration(1)
+                return pokedexService.getPokemonByGeneration(generation)
             }
 
             override suspend fun convertApiResponseToData(response: Response<out Any?>): PokemonSpecies {
@@ -48,11 +50,58 @@ class PokedexRepositoryImpl @Inject constructor(
             }
 
             override suspend fun operateOnDataPostFetch(data: PokemonSpecies) {
+                data.pokemonGeneration.let { result ->
+                    result.map {
+                        getPokemon(it.id)
+                    }
+                }
             }
         }
 
         return dataFetchHelper.fetchDataIOAsync().await()
     }
 
+    override suspend fun getAllPokemon(): Resource<List<Pokemon>> {
+        val dataFetchHelper = object : DataFetchHelper.LocalOnly<List<Pokemon>>(
+            "PokedexRepositoryImpl",
+        ) {
+            override suspend fun getDataFromLocal(): List<Pokemon> {
+                return appDatabase.pokemonDao().getAll()
+            }
+        }
+
+        return dataFetchHelper.fetchDataIOAsync().await()
+    }
+
+    override suspend fun getPokemon(id: Int): Resource<Pokemon> {
+        val dataFetchHelper = object : DataFetchHelper.LocalFirstUntilStale<Pokemon>(
+            "PokedexRepositoryImpl",
+            sharedPreferences,
+            CacheKey.POKEDEX_POKEMON.toString() + "_" + id,
+            "Cache de pokemon pelo id",
+            TimeUnit.HOURS.toSeconds(24 * 30)
+        ) {
+            override suspend fun getDataFromLocal(): Pokemon? {
+                return appDatabase.pokemonDao().getById(id)
+            }
+
+            override suspend fun getDataFromNetwork(): Response<out Any?> {
+                return pokedexService.getPokemon(id)
+            }
+
+            override suspend fun convertApiResponseToData(response: Response<out Any?>): Pokemon {
+                return Pokemon().reflectFrom(response.body() as PokemonResponse)
+            }
+
+            override suspend fun storeFreshDataToLocal(data: Pokemon): Boolean {
+                data.let {
+                    appDatabase.pokemonDao().insert(data)
+                    return true
+                }
+            }
+        }
+
+        return dataFetchHelper.fetchDataIOAsync().await()
+    }
 }
 

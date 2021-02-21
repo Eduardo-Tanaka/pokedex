@@ -90,7 +90,13 @@ dependencies {
     // logging
     implementation "com.jakewharton.timber:timber:$timberVersion"
 
-    //Threeten ABP (DateTime support)
+    // Threeten ABP (DateTime support)
     implementation "com.jakewharton.threetenabp:threetenabp:$jwThreetenABP"
     testImplementation "org.threeten:threetenbp:$orgThreetenbp"
+
+    // Glide
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
+    implementation "com.github.florent37:glidepalette:$glidePaletteVersion"
+
 }
