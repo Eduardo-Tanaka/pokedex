@@ -10,6 +10,7 @@ import kotlinx.android.parcel.Parcelize
 data class PokemonGeneration(
     @PrimaryKey
     var id: Int,
+    var generation: Int,
     var name: String,
     var url: String
 ) : Parcelable

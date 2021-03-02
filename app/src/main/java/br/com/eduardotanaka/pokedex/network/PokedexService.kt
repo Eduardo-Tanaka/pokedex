@@ -15,5 +15,5 @@ interface PokedexService {
     ): Response<PokemonGenerationResponse>
 
     @GET("/api/v2/pokemon/{id}")
-    suspend fun getPokemon(@Path("id") id: Int) : Response<PokemonResponse>
+    suspend fun getPokemon(@Path("id") id: Int): Response<PokemonResponse>
 }

@@ -13,6 +13,7 @@ class Resource<T> {
      * The data corresponding to the resource
      */
     var data: T? = null
+
     /**
      * A response to carry to the consumer
      */

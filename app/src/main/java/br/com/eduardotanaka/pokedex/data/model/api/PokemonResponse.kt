@@ -9,5 +9,14 @@ data class PokemonResponse(
     @SerializedName("name")
     val name: String,
     @SerializedName("sprites")
-    val sprites: SpritesResponse
+    val sprites: SpritesResponse,
+    @SerializedName("height")
+    val height: Int,
+    @SerializedName("weight")
+    val weight: Int,
+    @SerializedName("types")
+    val types: List<TypeObjectResponse>,
+    @SerializedName("stats")
+    val stats: List<StatObjectResponse>,
+    var generation: Int
 ) : ApiResponseObject

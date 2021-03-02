@@ -7,10 +7,10 @@ import br.com.eduardotanaka.pokedex.data.model.entity.Pokemon
 import br.com.eduardotanaka.pokedex.data.model.entity.PokemonGeneration
 import br.com.eduardotanaka.pokedex.data.room.converter.Converters
 import br.com.eduardotanaka.pokedex.data.room.dao.PokemonDao
-import br.com.eduardotanaka.pokedex.data.room.dao.base.PokemonGenerationDao
+import br.com.eduardotanaka.pokedex.data.room.dao.PokemonGenerationDao
 
 @Database(
-    version = 3,
+    version = 5,
     entities = [
         Pokemon::class,
         PokemonGeneration::class,

@@ -3,6 +3,8 @@ package br.com.eduardotanaka.pokedex.data.repository.helpers
 import android.content.SharedPreferences
 import androidx.annotation.WorkerThread
 import br.com.eduardotanaka.pokedex.data.repository.base.Resource
+import br.com.eduardotanaka.pokedex.data.repository.helpers.DataFetchHelper.DataFetchStyle
+import br.com.eduardotanaka.pokedex.data.repository.helpers.DataFetchHelper.DataFetchStyle.Result
 import br.com.eduardotanaka.pokedex.util.RepositoryUtil
 import br.com.eduardotanaka.pokedex.util.onMainThread
 import kotlinx.coroutines.Deferred
@@ -315,7 +317,8 @@ abstract class DataFetchHelper<T>(
 
         when (dataFetchStyle) {
             DataFetchStyle.NETWORK_FIRST_LOCAL_FAILOVER -> {
-                resource.data = refreshDataFromNetwork(resource,
+                resource.data = refreshDataFromNetwork(
+                    resource,
                     DataFetchStyle.NETWORK_FIRST_LOCAL_FAILOVER
                 )
                 if (resource.data == null) {
@@ -343,7 +346,8 @@ abstract class DataFetchHelper<T>(
                 //TODO:
                 //always refreshing following it
                 val dataFromNetwork =
-                    refreshDataFromNetwork(resource,
+                    refreshDataFromNetwork(
+                        resource,
                         DataFetchStyle.LOCAL_FIRST_NETWORK_REFRESH_ALWAYS
                     )
                 if (resource.data == null) {
@@ -368,7 +372,8 @@ abstract class DataFetchHelper<T>(
                     )
                 ) {
                     log("Cache is stale")
-                    resource.data = refreshDataFromNetwork(resource,
+                    resource.data = refreshDataFromNetwork(
+                        resource,
                         DataFetchStyle.LOCAL_FIRST_UNTIL_STALE
                     )
                     if (resource.data == null) {

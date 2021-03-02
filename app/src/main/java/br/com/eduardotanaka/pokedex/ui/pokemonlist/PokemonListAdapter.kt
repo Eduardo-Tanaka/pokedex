@@ -1,9 +1,11 @@
 package br.com.eduardotanaka.pokedex.ui.pokemonlist
 
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
 import br.com.eduardotanaka.pokedex.R
 import br.com.eduardotanaka.pokedex.data.model.entity.Pokemon
@@ -18,7 +20,7 @@ class PokemonListAdapter(
 ) : RecyclerView.Adapter<PokemonListAdapter.MainViewHolder>() {
 
     interface OnItemSelectedListener {
-        fun onPokemonClicked(pokemon: Pokemon)
+        fun onPokemonClicked(pokemon: Pokemon, options: ActivityOptionsCompat)
     }
 
     var onItemSelectedListener: OnItemSelectedListener? = null
@@ -57,11 +59,17 @@ class PokemonListAdapter(
                             )
                         }
                 )
-                .into(rowView.pokemon_card_image);
+                .into(rowView.pokemon_card_image)
             rowView.pokemon_card_name.text = this.pokemon.name
+            rowView.pokemon_card.transitionName = "pokemon_${this.pokemon.name}"
 
             rowView.pokemon_card.setOnClickListener {
-                onItemSelectedListener?.onPokemonClicked(pokemon)
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    context as Activity,
+                    rowView.pokemon_card,
+                    "pokemon_${pokemon.name}"
+                )
+                onItemSelectedListener?.onPokemonClicked(pokemon, options)
             }
         }
     }

@@ -13,4 +13,7 @@ abstract class PokemonDao : BaseDao<Pokemon>() {
 
     @Query("SELECT * FROM Pokemon")
     abstract fun getAll(): List<Pokemon>
+
+    @Query("SELECT * FROM Pokemon WHERE generation = :generation")
+    abstract fun getAllByGeneration(generation: Int): List<Pokemon>
 }

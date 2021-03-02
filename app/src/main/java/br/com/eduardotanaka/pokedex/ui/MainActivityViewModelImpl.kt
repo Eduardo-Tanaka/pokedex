@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import br.com.eduardotanaka.pokedex.R
 import br.com.eduardotanaka.pokedex.data.model.entity.Pokemon
-import br.com.eduardotanaka.pokedex.data.model.entity.base.PokemonSpecies
+import br.com.eduardotanaka.pokedex.data.model.entity.PokemonSpecies
 import br.com.eduardotanaka.pokedex.data.repository.PokedexRepository
 import br.com.eduardotanaka.pokedex.ui.base.BaseViewModel
 import br.com.eduardotanaka.pokedex.ui.base.StatefulResource
@@ -25,10 +25,10 @@ class MainActivityViewModelImpl @Inject constructor(
         MutableLiveData()
     override val pokemonsList: LiveData<StatefulResource<List<Pokemon>>> = mutablePokemonList
 
-    override fun getPokemon(id: Int) {
+    override fun getPokemon(id: Int, generation: Int) {
         launch {
             mutablePokemon.value = StatefulResource.with(StatefulResource.State.LOADING)
-            val resource = pokedexRepository.getPokemon(id)
+            val resource = pokedexRepository.getPokemon(id, generation)
             when {
                 resource.hasData() -> {
                     //return the value
@@ -56,10 +56,10 @@ class MainActivityViewModelImpl @Inject constructor(
         }
     }
 
-    override fun getPokemons() {
+    override fun getPokemons(generation: Int) {
         launch {
             mutablePokemonList.value = StatefulResource.with(StatefulResource.State.LOADING)
-            val resource = pokedexRepository.getAllPokemon()
+            val resource = pokedexRepository.getAllPokemon(generation)
             when {
                 resource.hasData() -> {
                     //return the value
@@ -77,7 +77,7 @@ class MainActivityViewModelImpl @Inject constructor(
     override fun getPokemonByGeneration(generation: Int) {
         launch {
             mutablePokemonSpecies.value = StatefulResource.with(StatefulResource.State.LOADING)
-            val resource = pokedexRepository.getGeneration(1)
+            val resource = pokedexRepository.getGeneration(generation)
             when {
                 resource.hasData() -> {
                     //return the value

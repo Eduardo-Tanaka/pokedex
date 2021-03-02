@@ -3,9 +3,9 @@ package br.com.eduardotanaka.pokedex.data.model.api
 import br.com.eduardotanaka.pokedex.data.model.api.base.ApiResponseObject
 import com.google.gson.annotations.SerializedName
 
-data class PokemonGenerationResponse(
-    @SerializedName("id")
-    val id: Int,
-    @SerializedName("pokemon_species")
-    val pokemonSpecies: List<PokemonSpeciesResponse>
+data class TypeObjectResponse(
+    @SerializedName("slot")
+    val slot: Int,
+    @SerializedName("type")
+    val type: TypeResponse
 ) : ApiResponseObject
